@@ -22,7 +22,7 @@ body{
   font-family:var(--font);
   background:#000;
   color:var(--muted);
-  padding-bottom:50px;
+  padding-bottom:100px;
 }
 
 /* HEADER */
@@ -86,6 +86,21 @@ body{
 }
 .modal h3{ text-align:center; color:var(--green); font-size:22px; }
 
+/* BACK BUTTON */
+.modal-back-btn{
+  background:#222;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid #444;
+  cursor:pointer;
+  margin-bottom:12px;
+}
+.modal-back-btn:hover{
+  border-color:var(--neon);
+  color:var(--neon);
+}
+
 /* PACK LIST */
 .pack-list{
   display:grid; grid-template-columns:repeat(2,1fr);
@@ -122,6 +137,29 @@ body{
 .btn-primary{
   padding:12px 16px; background:var(--green); color:#000;
   font-weight:900; border-radius:10px; cursor:pointer;
+}
+
+/* FOOTER */
+.footer{
+  width:100%;
+  padding:25px 0;
+  text-align:center;
+  background:#050505;
+  border-top:1px solid var(--border);
+  position:fixed;
+  bottom:0;
+  left:0;
+}
+.footer a{
+  color:var(--green);
+  margin:0 12px;
+  font-weight:900;
+  text-decoration:none;
+  font-size:16px;
+}
+.footer a:hover{
+  color:var(--neon);
+  text-shadow:0 0 8px var(--neon);
 }
 </style>
 </head>
@@ -168,6 +206,8 @@ body{
 <div class="modal-back" id="modal">
   <div class="modal">
 
+    <button class="modal-back-btn" id="btnModalBack">← Voltar ao início</button>
+
     <h3 id="modalTitle">Pacotes</h3>
     <div id="packList" class="pack-list"></div>
 
@@ -186,6 +226,12 @@ body{
     </div>
 
   </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a href="https://www.instagram.com/socialboost.express" target="_blank">Instagram</a>
+  <a href="https://wa.me/5521959138423" target="_blank">WhatsApp</a>
 </div>
 
 <script>
@@ -232,7 +278,7 @@ function extractUsername(link){
   catch{return null;}
 }
 
-/* LOAD PROFILE + AVATAR COM LETRA */
+/* LOAD PROFILE */
 document.getElementById("btnLoad").onclick = async () => {
   const link = document.getElementById("profileLink").value.trim();
   const user = extractUsername(link);
@@ -242,15 +288,13 @@ document.getElementById("btnLoad").onclick = async () => {
   currentProfile = user;
   document.getElementById("displayUser").textContent = "@"+user;
 
-  const instaURL = `https://unavatar.io/instagram/${encodeURIComponent(user)}`;
   const avatarImg = document.getElementById("avatarImg");
   const avatarFallback = document.getElementById("avatarFallback");
 
   avatarImg.style.display = "block";
-  avatarImg.src = instaURL;
+  avatarImg.src = `https://unavatar.io/instagram/${encodeURIComponent(user)}`;
   avatarFallback.style.display = "none";
 
-  // Após 500ms, se a imagem ainda for o avatar genérico → mostra letra
   setTimeout(() => {
     if (avatarImg.naturalWidth <= 50) {
       avatarImg.style.display = "none";
@@ -286,6 +330,7 @@ document.querySelectorAll(".choice").forEach(c=>{
       packList.appendChild(div);
     });
 
+    document.getElementById("paymentArea").style.display = "none";
     document.getElementById("modal").style.display = "flex";
   };
 });
@@ -310,7 +355,7 @@ CÓDIGO PIX:
 ${PIX_CODE}`;
 }
 
-/* COPY (funciona em local e navegadores) */
+/* COPY */
 function forceCopy(text){
   try{
     if(navigator.clipboard && navigator.clipboard.writeText){
@@ -335,6 +380,13 @@ document.getElementById("btnCopyCode").onclick = () => forceCopy(PIX_CODE);
 document.getElementById("btnCancelModal").onclick = () => {
   document.getElementById("modal").style.display = "none";
   document.getElementById("paymentArea").style.display = "none";
+};
+
+/* NEW BACK BUTTON */
+document.getElementById("btnModalBack").onclick = () => {
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("paymentArea").style.display = "none";
+  selectedPackage = null;
 };
 
 /* WHATSAPP */
