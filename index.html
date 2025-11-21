@@ -60,7 +60,7 @@ body{
   display:flex; align-items:center; justify-content:center;
 }
 .avatar img{ width:100%; height:100%; object-fit:cover; }
-#avatarFallback{ font-size:26px; font-weight:900; color:var(--green); }
+#avatarFallback{ font-size:28px; font-weight:900; color:var(--green); }
 
 .profile-username{ color:var(--green); font-weight:900; }
 
@@ -232,7 +232,7 @@ function extractUsername(link){
   catch{return null;}
 }
 
-/* LOAD PROFILE + AVATAR */
+/* LOAD PROFILE + AVATAR COM LETRA */
 document.getElementById("btnLoad").onclick = async () => {
   const link = document.getElementById("profileLink").value.trim();
   const user = extractUsername(link);
@@ -243,8 +243,6 @@ document.getElementById("btnLoad").onclick = async () => {
   document.getElementById("displayUser").textContent = "@"+user;
 
   const instaURL = `https://unavatar.io/instagram/${encodeURIComponent(user)}`;
-  const backupAvatar = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user)}`;
-
   const avatarImg = document.getElementById("avatarImg");
   const avatarFallback = document.getElementById("avatarFallback");
 
@@ -252,14 +250,19 @@ document.getElementById("btnLoad").onclick = async () => {
   avatarImg.src = instaURL;
   avatarFallback.style.display = "none";
 
-  avatarImg.onerror = () => {
-    // se unavatar falhar, carrega initials svg
-    avatarImg.src = backupAvatar;
-    avatarImg.onerror = () => {
+  // Após 500ms, se a imagem ainda for o avatar genérico → mostra letra
+  setTimeout(() => {
+    if (avatarImg.naturalWidth <= 50) {
       avatarImg.style.display = "none";
       avatarFallback.style.display = "flex";
       avatarFallback.textContent = user[0].toUpperCase();
     }
+  }, 500);
+
+  avatarImg.onerror = () => {
+    avatarImg.style.display = "none";
+    avatarFallback.style.display = "flex";
+    avatarFallback.textContent = user[0].toUpperCase();
   };
 
   document.getElementById("previewWrap").style.display = "block";
