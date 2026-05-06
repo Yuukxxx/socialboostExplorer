@@ -1,419 +1,134 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SOCIAL BOOST EXPRESS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAXCOD</title>
 
 <style>
-:root{
-  --bg:#000;
-  --card:#0f0f0f;
-  --muted:#cfcfcf;
-  --accent:#fff;
-  --green:#2ecc71;
-  --neon:#39ff14;
-  --border: rgba(57,255,20,0.2);
-  --font:'Inter',system-ui,Arial;
-}
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:var(--font);
-  background:#000;
-  color:var(--muted);
-  padding-bottom:100px;
-  overflow-y:auto !important;
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #0a0a0a, #000);
+    font-family: 'Courier New', monospace;
+    color: #00ffcc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* HEADER */
-.header{ text-align:center; padding:25px 0; }
-.brand{ color:var(--neon); font-size:28px; font-weight:900; text-shadow:0 0 10px var(--neon); }
-.subtitle{ color:var(--green); margin-top:6px; }
-
-/* INPUT AREA */
-.container{ max-width:900px; margin:auto; padding:20px; }
-.profile-box{
-  display:flex; gap:10px; padding:15px;
-  background:var(--card);
-  border-radius:12px; border:1px solid var(--border);
-}
-#profileLink{
-  flex:1; padding:12px; border-radius:10px;
-  background:#050505; border:1px solid #333; color:#ddd;
-}
-.btn-action{
-  padding:12px 18px; border-radius:10px;
-  border:2px solid var(--green);
-  background:transparent; color:var(--green);
-  font-weight:900; cursor:pointer;
-}
-.btn-action:hover{ background:var(--green); color:#000; }
-
-/* PROFILE PREVIEW */
-.profile-preview{
-  display:flex; gap:12px; align-items:center;
-  margin-top:14px;
-}
-.avatar{
-  width:65px; height:65px; border-radius:12px;
-  background:#111; border:1.5px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-}
-.avatar img{ width:100%; height:100%; object-fit:cover; }
-#avatarFallback{ font-size:28px; font-weight:900; color:var(--green); }
-
-.profile-username{ color:var(--green); font-weight:900; }
-
-/* CATEGORY BUTTONS */
-.choices{ margin-top:18px; display:flex; flex-direction:column; gap:14px; }
-.choice{
-  padding:18px; border-radius:14px; background:#0b0b0b;
-  border:1px solid var(--border); cursor:pointer;
-  display:flex; gap:14px; align-items:center;
-}
-.choice:hover{ border-color:var(--neon); box-shadow:0 0 10px var(--neon); }
-.choice-title{ color:#fff; font-size:18px; font-weight:900; }
-
-/* MODAL BACKGROUND - CORRIGIDO */
-.modal-back{
-  position:fixed; inset:0; background:rgba(0,0,0,0.8);
-  display:none; justify-content:center;
-  align-items:flex-start !important;
-  overflow-y:auto !important;
-  padding:20px; z-index:999;
+/* container */
+.box {
+    background: rgba(15,15,15,0.95);
+    padding: 40px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 30px #00ffcc22;
 }
 
-/* MODAL CONTENT - CORRIGIDO */
-.modal{
-  width:100%; max-width:700px; background:#0a0a0a;
-  padding:20px; border-radius:14px; border:1px solid var(--border);
-  max-height:90vh;
-  overflow-y:auto !important;
-}
-.modal h3{ text-align:center; color:var(--green); font-size:22px; }
-
-/* BACK BUTTON */
-.modal-back-btn{
-  background:#222;
-  color:#fff;
-  padding:10px 16px;
-  border-radius:10px;
-  border:1px solid #444;
-  cursor:pointer;
-  margin-bottom:12px;
-}
-.modal-back-btn:hover{
-  border-color:var(--neon);
-  color:var(--neon);
+/* título */
+h1 {
+    margin-bottom: 5px;
+    letter-spacing: 4px;
+    font-size: 28px;
 }
 
-/* PACK LIST */
-.pack-list{
-  display:grid; grid-template-columns:repeat(2,1fr);
-  gap:12px; margin-top:14px;
-}
-.pack-item{
-  background:#111; padding:16px; border-radius:12px;
-  border:1px solid var(--border); text-align:center;
-  cursor:pointer;
-}
-.pack-item:hover{ border-color:var(--neon); }
-
-/* PAYMENT AREA */
-.payment-area{ margin-top:18px; background:#050505; padding:12px; border-radius:12px; }
-.copy-field{
-  width:100%; padding:12px; background:#000;
-  border-radius:10px; border:1px solid #333;
-  color:#ddd; font-size:14px;
-}
-.copy-btn{
-  width:100%; padding:12px; background:var(--green);
-  color:#000; border:none; border-radius:10px;
-  font-weight:900; margin-top:10px; cursor:pointer;
-}
-.copy-btn:hover{ filter:brightness(.9); }
-
-.actions{
-  margin-top:14px; display:flex; justify-content:space-between;
-}
-.btn-ghost{
-  padding:12px 16px; background:#222; border-radius:10px;
-  cursor:pointer; color:#ccc; border:none;
-}
-.btn-primary{
-  padding:12px 16px; background:var(--green); color:#000;
-  font-weight:900; border-radius:10px; cursor:pointer;
+.sub {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 25px;
 }
 
-/* FOOTER */
-.footer{
-  width:100%;
-  padding:25px 0;
-  text-align:center;
-  background:#050505;
-  border-top:1px solid var(--border);
-  position:fixed;
-  bottom:0;
-  left:0;
+/* inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background: #111;
+    color: #00ffcc;
+    outline: none;
+    transition: 0.2s;
 }
-.footer a{
-  color:var(--green);
-  margin:0 12px;
-  font-weight:900;
-  text-decoration:none;
-  font-size:16px;
+
+input:focus {
+    box-shadow: 0 0 10px #00ffcc55;
 }
-.footer a:hover{
-  color:var(--neon);
-  text-shadow:0 0 8px var(--neon);
+
+/* botão */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #00ffcc;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00ffaa;
+}
+
+/* loading */
+#loading {
+    display: none;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #00ffaa;
+    animation: blink 1s infinite;
+}
+
+/* sucesso */
+#msg {
+    display: none;
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+@keyframes blink {
+    50% { opacity: 0.3; }
 }
 </style>
-</head>
 
+</head>
 <body>
 
-<header class="header">
-  <div class="brand">SOCIAL BOOST EXPRESS</div>
-  <div class="subtitle">Impulsione seu Instagram — rápido e profissional</div>
-</header>
+<div class="box">
+    <h1>HAXCOD</h1>
+    <div class="sub">Acesso exclusivo ao sistema</div>
 
-<div class="container">
+    <input type="text" id="user" placeholder="Usuário">
+    <input type="password" id="pass" placeholder="Senha">
 
-  <!-- INPUT -->
-  <div class="profile-box">
-    <input id="profileLink" placeholder="Cole o link do perfil ou @username">
-    <button id="btnLoad" class="btn-action">Carregar</button>
-  </div>
+    <button onclick="entrar()">Entrar</button>
 
-  <!-- PROFILE PREVIEW -->
-  <div id="previewWrap" style="display:none;">
-    <div class="profile-preview">
-      <div class="avatar">
-        <img id="avatarImg" src="" style="display:none;">
-        <div id="avatarFallback">@</div>
-      </div>
-      <div>
-        <div class="profile-username" id="displayUser">@user</div>
-      </div>
-    </div>
-
-    <!-- CATEGORIES -->
-    <div class="choices">
-      <div class="choice" data-cat="mundial"><div class="choice-title">🌎 Seguidores Mundiais</div></div>
-      <div class="choice" data-cat="brasileiros"><div class="choice-title">🇧🇷 Seguidores Brasileiros</div></div>
-      <div class="choice" data-cat="curtidas"><div class="choice-title">❤️ Curtidas</div></div>
-      <div class="choice" data-cat="views"><div class="choice-title">👁 Visualizações</div></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- MODAL -->
-<div class="modal-back" id="modal">
-  <div class="modal">
-
-    <button class="modal-back-btn" id="btnModalBack">← Voltar ao início</button>
-
-    <h3 id="modalTitle">Pacotes</h3>
-    <div id="packList" class="pack-list"></div>
-
-    <div id="paymentArea" class="payment-area" style="display:none;">
-      <div id="selectedInfo" style="color:var(--green); font-weight:900;"></div>
-
-      <textarea id="copyText" class="copy-field" rows="4" readonly></textarea>
-
-      <button id="btnCopyPix" class="copy-btn">Copiar CPF PIX</button>
-      <button id="btnCopyCode" class="copy-btn">Copiar Código PIX</button>
-
-      <div class="actions">
-        <button class="btn-ghost" id="btnCancelModal">Cancelar</button>
-        <button class="btn-primary" id="btnConclude">Concluir Pedido</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <a href="https://www.instagram.com/socialboost.express" target="_blank">Instagram</a>
-  <a href="https://wa.me/5521959138423" target="_blank">WhatsApp</a>
+    <div id="loading">Verificando credenciais...</div>
+    <div id="msg">Acesso liberado. Redirecionando...</div>
 </div>
 
 <script>
-/* CONFIG */
-const WHATSAPP = "5521959138423";
+function entrar() {
+    let user = document.getElementById("user").value;
+    let pass = document.getElementById("pass").value;
 
-const PIX_CPF = "52226665811";
-const PIX_CODE = "00020126330014BR.GOV.BCB.PIX0111522666658115204000053039865802BR5922YURI FOSTER MARQUEZINI6009SAO PAULO62070503***63045F2C";
-
-const PACKS = {
-  mundial:[
-    {qty:50,price:2},{qty:100,price:4},{qty:200,price:6},{qty:300,price:8},
-    {qty:400,price:10},{qty:500,price:12},{qty:700,price:15},
-    {qty:1000,price:20},{qty:2000,price:35},{qty:10000,price:270}
-  ],
-  brasileiros:[
-    {qty:50,price:6},{qty:100,price:12},{qty:200,price:15},{qty:300,price:20},
-    {qty:400,price:25},{qty:500,price:30},{qty:600,price:35},{qty:700,price:40},
-    {qty:800,price:45},{qty:900,price:50},{qty:1000,price:60},
-    {qty:2000,price:120},{qty:3000,price:180},{qty:4000,price:240},{qty:5000,price:300}
-  ],
-  curtidas:[
-    {qty:100,price:6},{qty:200,price:8},{qty:300,price:10},
-    {qty:500,price:15},{qty:1000,price:25}
-  ],
-  views:[
-    {qty:500,price:4},{qty:1000,price:7},{qty:2000,price:10},
-    {qty:3000,price:14},{qty:5000,price:20},
-    {qty:10000,price:30},{qty:20000,price:40},
-    {qty:30000,price:50},{qty:50000,price:65},{qty:100000,price:100}
-  ]
-};
-
-let currentProfile = null;
-let currentCategory = null;
-let selectedPackage = null;
-
-/* EXTRACT USERNAME */
-function extractUsername(link){
-  if(!link) return null;
-  link = link.trim().replace("@","");
-  if(!link.includes("instagram.com")) return link.split("/")[0];
-  try{ return new URL(link).pathname.replace(/\//g,""); }
-  catch{return null;}
-}
-
-/* LOAD PROFILE */
-document.getElementById("btnLoad").onclick = async () => {
-  const link = document.getElementById("profileLink").value.trim();
-  const user = extractUsername(link);
-
-  if(!user){ alert("Digite um perfil válido."); return; }
-
-  currentProfile = user;
-  document.getElementById("displayUser").textContent = "@"+user;
-
-  const avatarImg = document.getElementById("avatarImg");
-  const avatarFallback = document.getElementById("avatarFallback");
-
-  avatarImg.style.display = "block";
-  avatarImg.src = `https://unavatar.io/instagram/${encodeURIComponent(user)}`;
-  avatarFallback.style.display = "none";
-
-  setTimeout(() => {
-    if (avatarImg.naturalWidth <= 50) {
-      avatarImg.style.display = "none";
-      avatarFallback.style.display = "flex";
-      avatarFallback.textContent = user[0].toUpperCase();
+    if(user === "" || pass === "") {
+        alert("Preencha todos os campos");
+        return;
     }
-  }, 500);
 
-  avatarImg.onerror = () => {
-    avatarImg.style.display = "none";
-    avatarFallback.style.display = "flex";
-    avatarFallback.textContent = user[0].toUpperCase();
-  };
+    document.getElementById("loading").style.display = "block";
 
-  document.getElementById("previewWrap").style.display = "block";
-};
-
-/* OPEN CATEGORY */
-document.querySelectorAll(".choice").forEach(c=>{
-  c.onclick = () => {
-    currentCategory = c.dataset.cat;
-
-    document.getElementById("modalTitle").textContent =
-      c.innerText.trim() || "Pacotes";
-
-    const packList = document.getElementById("packList");
-    packList.innerHTML = "";
-    PACKS[currentCategory].forEach(pkg=>{
-      let div = document.createElement("div");
-      div.className = "pack-item";
-      div.innerHTML = `<div style="font-weight:900;">${pkg.qty}</div><div style="margin-top:6px;">R$ ${pkg.price}</div>`;
-      div.onclick = () => selectPackage(pkg);
-      packList.appendChild(div);
-    });
-
-    document.getElementById("paymentArea").style.display = "none";
-    document.getElementById("modal").style.display = "flex";
-  };
-});
-
-/* SELECT PACKAGE */
-function selectPackage(pkg){
-  selectedPackage = pkg;
-  document.getElementById("paymentArea").style.display = "block";
-
-  document.getElementById("selectedInfo").textContent = `${pkg.qty} por R$ ${pkg.price}`;
-
-  document.getElementById("copyText").value =
-`Pedido SOCIAL BOOST EXPRESS
-Perfil: https://instagram.com/${currentProfile}
-
-Pacote: ${pkg.qty}
-Valor: R$ ${pkg.price}
-
-PIX CPF: ${PIX_CPF}
-
-CÓDIGO PIX:
-${PIX_CODE}`;
+    setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("msg").style.display = "block";
+    }, 2500);
 }
-
-/* COPY */
-function forceCopy(text){
-  try{
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text);
-      alert("Copiado!");
-      return;
-    }
-  }catch(e){}
-  const tmp = document.createElement("textarea");
-  tmp.value = text;
-  document.body.appendChild(tmp);
-  tmp.select();
-  document.execCommand("copy");
-  tmp.remove();
-  alert("Copiado!");
-}
-
-document.getElementById("btnCopyPix").onclick = () => forceCopy(PIX_CPF);
-document.getElementById("btnCopyCode").onclick = () => forceCopy(PIX_CODE);
-
-/* CLOSE */
-document.getElementById("btnCancelModal").onclick = () => {
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("paymentArea").style.display = "none";
-};
-
-/* NEW BACK BUTTON */
-document.getElementById("btnModalBack").onclick = () => {
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("paymentArea").style.display = "none";
-  selectedPackage = null;
-};
-
-/* WHATSAPP */
-document.getElementById("btnConclude").onclick = () => {
-  if(!selectedPackage) { alert("Selecione um pacote."); return; }
-
-  const msg = encodeURIComponent(
-`🧾 NOVO PEDIDO — SOCIAL BOOST EXPRESS
-
-Perfil: https://instagram.com/${currentProfile}
-Pacote: ${selectedPackage.qty}
-Valor: R$ ${selectedPackage.price}
-
-Cliente informou que já pagou.`
-  );
-
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");
-  document.getElementById("modal").style.display = "none";
-  document.getElementById("paymentArea").style.display = "none";
-};
 </script>
 
 </body>
