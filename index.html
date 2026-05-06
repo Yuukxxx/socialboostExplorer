@@ -8,32 +8,36 @@
 <style>
 body {
     margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at top, #0a0a0a, #000);
+    min-height: 100vh;
+    background: url('https://look.jmgbb.com/images/gs5fFNPoOE.png') no-repeat center center;
+    background-size: cover;
     font-family: 'Courier New', monospace;
     color: #00ffcc;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px 0;
 }
 
 .box {
-    background: rgba(15,15,15,0.95);
+    background: rgba(15,15,15,0.55);
     padding: 30px;
     border-radius: 15px;
     width: 320px;
     text-align: center;
     box-shadow: 0 0 30px #00ffcc22;
+    backdrop-filter: blur(1px);
 }
 
 h1 {
     margin-bottom: 5px;
     letter-spacing: 4px;
     font-size: 28px;
+    text-shadow: 0 0 10px #00ffcc88;
 }
 
 .sub {
-    color: #888;
+    color: #ccc;
     font-size: 13px;
     margin-bottom: 20px;
 }
@@ -44,9 +48,10 @@ input {
     margin: 10px 0;
     border: none;
     border-radius: 8px;
-    background: #111;
+    background: rgba(0,0,0,0.65);
     color: #00ffcc;
     outline: none;
+    box-sizing: border-box;
 }
 
 button {
@@ -59,10 +64,12 @@ button {
     color: #000;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 button:hover {
     background: #00ffaa;
+    transform: scale(1.02);
 }
 
 #loading {
@@ -80,23 +87,32 @@ button:hover {
 }
 
 .pagamento {
-    margin-top: 25px;
-    border-top: 1px solid #222;
-    padding-top: 15px;
+    margin-top: 35px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+}
+
+.pagamento strong {
+    font-size: 16px;
+    color: #00ffcc;
 }
 
 .pagamento img {
-    width: 180px;
-    margin: 10px 0;
+    width: 140px;
+    margin: 35px auto 10px;
+    display: block;
     border-radius: 10px;
+    box-shadow: 0 0 15px #000;
+    padding: 8px;
 }
 
 .pix {
-    background: #111;
-    padding: 8px;
+    background: rgba(0,0,0,0.65);
+    padding: 10px;
     border-radius: 6px;
     font-size: 12px;
     word-break: break-all;
+    margin-top: 10px;
 }
 
 .copy {
@@ -109,7 +125,9 @@ button:hover {
 }
 
 @keyframes blink {
-    50% { opacity: 0.3; }
+    50% {
+        opacity: 0.3;
+    }
 }
 </style>
 
@@ -117,6 +135,7 @@ button:hover {
 <body>
 
 <div class="box">
+
     <h1>HAXCOD</h1>
     <div class="sub">Área de acesso restrito</div>
 
@@ -129,32 +148,43 @@ button:hover {
     <div id="msg">Acesso autorizado</div>
 
     <div class="pagamento">
+
         <p><strong>Libere seu acesso</strong></p>
 
-        <p style="font-size:12px;color:#aaa;">
+        <p style="font-size:12px;color:#ddd;">
             Para ativar sua conta, realize o pagamento via Pix utilizando o QR Code abaixo ou a chave Pix.
         </p>
 
-        <img src="https://look.jmgbb.com/images/syDrUN87tz.png" alt="QR Code Pix">
+        <img src="https://look.jmgbb.com/images/NjUON6THRC.png" alt="QR Code Pix">
 
-        <p style="font-size:12px;color:#aaa;">Ou utilize a chave Pix:</p>
+        <p style="font-size:12px;color:#ddd;">
+            Ou utilize a chave Pix:
+        </p>
 
         <div class="pix">
             dmenor.yf@gmail.com
         </div>
 
-        <button class="copy" onclick="copiarPix(this)">Copiar chave Pix</button>
+        <button class="copy" onclick="copiarPix(this)">
+            Copiar chave Pix
+        </button>
 
-        <button class="whats" onclick="enviarWhats()">Já realizei o pagamento</button>
+        <button class="whats" onclick="enviarWhats()">
+            Já realizei o pagamento
+        </button>
 
-        <p style="font-size:11px;color:#777;margin-top:10px;">
+        <p style="font-size:11px;color:#ccc;margin-top:10px;">
             Após o pagamento, envie o comprovante via WhatsApp para liberação do acesso.
         </p>
+
     </div>
+
 </div>
 
 <script>
+
 function entrar() {
+
     let user = document.getElementById("user").value;
     let pass = document.getElementById("pass").value;
 
@@ -166,50 +196,71 @@ function entrar() {
     document.getElementById("loading").style.display = "block";
 
     setTimeout(() => {
+
         if(user === "Haxcod101" && pass === "10101") {
+
             document.getElementById("loading").style.display = "none";
             document.getElementById("msg").style.display = "block";
+
         } else {
+
             document.getElementById("loading").style.display = "none";
             alert("Usuário ou senha incorretos");
+
         }
+
     }, 2000);
 }
 
-// 🔥 FUNÇÃO 100% COMPATÍVEL
 function copiarPix(btn) {
+
     let pix = "dmenor.yf@gmail.com";
 
     if (navigator.clipboard) {
+
         navigator.clipboard.writeText(pix).then(() => {
             sucesso(btn);
         }).catch(() => {
             fallbackCopy(pix, btn);
         });
+
     } else {
+
         fallbackCopy(pix, btn);
+
     }
 }
 
 function fallbackCopy(text, btn) {
+
     let textarea = document.createElement("textarea");
+
     textarea.value = text;
+
     document.body.appendChild(textarea);
+
     textarea.select();
+
     document.execCommand("copy");
+
     document.body.removeChild(textarea);
 
     sucesso(btn);
 }
 
 function sucesso(btn) {
+
     btn.innerText = "Copiado!";
+
     setTimeout(() => {
+
         btn.innerText = "Copiar chave Pix";
+
     }, 2000);
 }
 
 function enviarWhats() {
+
     let numero = "5511949946730";
 
     let mensagem = encodeURIComponent(
@@ -220,6 +271,7 @@ function enviarWhats() {
 
     window.open(url, "_blank");
 }
+
 </script>
 
 </body>
