@@ -17,17 +17,15 @@ body {
     align-items: center;
 }
 
-/* container */
 .box {
     background: rgba(15,15,15,0.95);
-    padding: 40px;
+    padding: 30px;
     border-radius: 15px;
     width: 320px;
     text-align: center;
     box-shadow: 0 0 30px #00ffcc22;
 }
 
-/* título */
 h1 {
     margin-bottom: 5px;
     letter-spacing: 4px;
@@ -37,10 +35,9 @@ h1 {
 .sub {
     color: #888;
     font-size: 13px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-/* inputs */
 input {
     width: 100%;
     padding: 12px;
@@ -50,45 +47,65 @@ input {
     background: #111;
     color: #00ffcc;
     outline: none;
-    transition: 0.2s;
 }
 
-input:focus {
-    box-shadow: 0 0 10px #00ffcc55;
-}
-
-/* botão */
 button {
     width: 100%;
     padding: 12px;
-    margin-top: 15px;
+    margin-top: 10px;
     border: none;
     border-radius: 8px;
     background: #00ffcc;
     color: #000;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 button:hover {
     background: #00ffaa;
 }
 
-/* loading */
 #loading {
     display: none;
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 12px;
     color: #00ffaa;
     animation: blink 1s infinite;
 }
 
-/* sucesso */
 #msg {
     display: none;
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 12px;
+}
+
+.pagamento {
+    margin-top: 25px;
+    border-top: 1px solid #222;
+    padding-top: 15px;
+}
+
+.pagamento img {
+    width: 180px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+.pix {
+    background: #111;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+.copy {
+    background: #00ffaa;
+}
+
+.whats {
+    background: #25D366;
+    color: #000;
 }
 
 @keyframes blink {
@@ -101,15 +118,39 @@ button:hover {
 
 <div class="box">
     <h1>HAXCOD</h1>
-    <div class="sub">Acesso exclusivo ao sistema</div>
+    <div class="sub">Área de acesso restrito</div>
 
     <input type="text" id="user" placeholder="Usuário">
     <input type="password" id="pass" placeholder="Senha">
 
-    <button onclick="entrar()">Entrar</button>
+    <button onclick="entrar()">Acessar</button>
 
-    <div id="loading">Verificando credenciais...</div>
-    <div id="msg">Acesso liberado. Redirecionando...</div>
+    <div id="loading">Validando credenciais...</div>
+    <div id="msg">Acesso autorizado</div>
+
+    <div class="pagamento">
+        <p><strong>Libere seu acesso</strong></p>
+
+        <p style="font-size:12px;color:#aaa;">
+            Para ativar sua conta, realize o pagamento via Pix utilizando o QR Code abaixo ou a chave Pix.
+        </p>
+
+        <img src="https://look.jmgbb.com/images/syDrUN87tz.png" alt="QR Code Pix">
+
+        <p style="font-size:12px;color:#aaa;">Ou utilize a chave Pix:</p>
+
+        <div class="pix">
+            dmenor.yf@gmail.com
+        </div>
+
+        <button class="copy" onclick="copiarPix(this)">Copiar chave Pix</button>
+
+        <button class="whats" onclick="enviarWhats()">Já realizei o pagamento</button>
+
+        <p style="font-size:11px;color:#777;margin-top:10px;">
+            Após o pagamento, envie o comprovante via WhatsApp para liberação do acesso.
+        </p>
+    </div>
 </div>
 
 <script>
@@ -125,9 +166,59 @@ function entrar() {
     document.getElementById("loading").style.display = "block";
 
     setTimeout(() => {
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("msg").style.display = "block";
-    }, 2500);
+        if(user === "Haxcod101" && pass === "10101") {
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("msg").style.display = "block";
+        } else {
+            document.getElementById("loading").style.display = "none";
+            alert("Usuário ou senha incorretos");
+        }
+    }, 2000);
+}
+
+// 🔥 FUNÇÃO 100% COMPATÍVEL
+function copiarPix(btn) {
+    let pix = "dmenor.yf@gmail.com";
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(pix).then(() => {
+            sucesso(btn);
+        }).catch(() => {
+            fallbackCopy(pix, btn);
+        });
+    } else {
+        fallbackCopy(pix, btn);
+    }
+}
+
+function fallbackCopy(text, btn) {
+    let textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    sucesso(btn);
+}
+
+function sucesso(btn) {
+    btn.innerText = "Copiado!";
+    setTimeout(() => {
+        btn.innerText = "Copiar chave Pix";
+    }, 2000);
+}
+
+function enviarWhats() {
+    let numero = "5511949946730";
+
+    let mensagem = encodeURIComponent(
+        "Olá, acabei de realizar o pagamento via Pix. Segue meu comprovante."
+    );
+
+    let url = `https://wa.me/${numero}?text=${mensagem}`;
+
+    window.open(url, "_blank");
 }
 </script>
 
