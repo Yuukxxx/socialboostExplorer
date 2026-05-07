@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAXCOD TOOL</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Courier New', monospace;
+    background:#050505;
+    color:#00ffcc;
+    overflow-x:hidden;
+}
+
+.topbar{
+    width:100%;
+    padding:18px;
+    background:#0a0a0a;
+    border-bottom:1px solid rgba(0,255,204,0.15);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 0 20px rgba(0,255,204,0.08);
+}
+
+.logo{
+    font-size:24px;
+    letter-spacing:4px;
+    text-shadow:0 0 12px #00ffcc;
+}
+
+.status{
+    font-size:12px;
+    color:#00ff88;
+}
+
+.container{
+    padding:20px;
+}
+
+.card{
+    background:rgba(15,15,15,0.95);
+    border:1px solid rgba(0,255,204,0.10);
+    border-radius:18px;
+    margin-bottom:18px;
+    overflow:hidden;
+    box-shadow:0 0 20px rgba(0,255,204,0.05);
+}
+
+.card-top{
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.icon{
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    background:rgba(0,255,204,0.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:24px;
+    border:1px solid rgba(0,255,204,0.20);
+}
+
+.title{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.desc{
+    color:#888;
+    font-size:11px;
+}
+
+.toggle{
+    width:52px;
+    height:28px;
+    border-radius:30px;
+    background:#111;
+    position:relative;
+    cursor:pointer;
+    transition:0.3s;
+    border:1px solid rgba(0,255,204,0.15);
+}
+
+.toggle::before{
+    content:'';
+    position:absolute;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#444;
+    top:2px;
+    left:2px;
+    transition:0.3s;
+}
+
+.toggle.active{
+    background:#00ff88;
+}
+
+.toggle.active::before{
+    left:26px;
+    background:#fff;
+}
+
+.console{
+    margin-top:25px;
+    background:#0a0a0a;
+    border:1px solid rgba(0,255,204,0.10);
+    border-radius:18px;
+    padding:18px;
+}
+
+.console-title{
+    margin-bottom:12px;
+    font-size:14px;
+}
+
+.logs{
+    color:#00ff99;
+    font-size:11px;
+    line-height:1.9;
+}
+
+.footer{
+    margin-top:25px;
+    text-align:center;
+    color:#555;
+    font-size:11px;
+    padding-bottom:25px;
+}
+
+.blink{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0.3;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+
+    <div class="logo">
+        HAXCOD TOOL
+    </div>
+
+    <div class="status">
+        SERVER ONLINE
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="card-top">
+
+            <div class="left">
+
+                <div class="icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <div class="title">
+                        AIM ASSIST
+                    </div>
+
+                    <div class="desc">
+                        Precision enhancement module
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="toggle" onclick="toggle(this, 'Aim Assist Enabled')"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-top">
+
+            <div class="left">
+
+                <div class="icon">
+                    👁
+                </div>
+
+                <div>
+
+                    <div class="title">
+                        ESP VIEW
+                    </div>
+
+                    <div class="desc">
+                        Visual tracking overlay
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="toggle" onclick="toggle(this, 'ESP View Enabled')"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-top">
+
+            <div class="left">
+
+                <div class="icon">
+                    ⚡
+                </div>
+
+                <div>
+
+                    <div class="title">
+                        BOOST FPS
+                    </div>
+
+                    <div class="desc">
+                        Performance optimization
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="toggle" onclick="toggle(this, 'FPS Boost Enabled')"></div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-top">
+
+            <div class="left">
+
+                <div class="icon">
+                    🔥
+                </div>
+
+                <div>
+
+                    <div class="title">
+                        FAST REACTION
+                    </div>
+
+                    <div class="desc">
+                        Input latency reduction
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="toggle" onclick="toggle(this, 'Fast Reaction Enabled')"></div>
+
+        </div>
+
+    </div>
+
+    <div class="console">
+
+        <div class="console-title">
+            SYSTEM CONSOLE
+        </div>
+
+        <div class="logs" id="logs">
+
+            > Initializing HAXCOD modules...<br>
+            > Connecting secure environment...<br>
+            > Mobile interface loaded...<br>
+            > Awaiting user action... <span class="blink">█</span>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        HAXCOD MOBILE TOOL v2.5.1
+    </div>
+
+</div>
+
+<script>
+
+function toggle(el, text){
+
+    el.classList.toggle("active");
+
+    let logs = document.getElementById("logs");
+
+    logs.innerHTML = `
+        > ${text}...<br>
+        > Syncing modules...<br>
+        > Secure environment stable...<br>
+        > HAXCOD operational... <span class="blink">█</span>
+    `;
+}
+
+</script>
+
+</body>
+</html>
