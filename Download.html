@@ -6,7 +6,6 @@
 <title>HAXCOD DOWNLOADS</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -194,37 +193,23 @@ button:hover{
 }
 
 @keyframes blink{
-    50%{
-        opacity:0.3;
-    }
+    50%{ opacity:0.3; }
 }
-
 </style>
 </head>
+
 <body>
 
 <div class="overlay">
 
     <div class="topo">
-
-        <div class="logo">
-            HAXCOD DOWNLOADS
-        </div>
-
-        <a href="#" class="back">
-            VOLTAR
-        </a>
-
+        <div class="logo">HAXCOD DOWNLOADS</div>
+        <a href="#" class="back">VOLTAR</a>
     </div>
 
     <div class="banner">
-
         <h1>DOWNLOAD CENTER</h1>
-
-        <p>
-            Área premium para membros VIP. Todos os arquivos são verificados e atualizados automaticamente pelo sistema HAXCOD HUB.
-        </p>
-
+        <p>Área premium para membros VIP. Todos os arquivos são verificados e atualizados automaticamente pelo sistema HAXCOD HUB.</p>
     </div>
 
     <div class="card">
@@ -233,61 +218,51 @@ button:hover{
 
         <div class="content">
 
-            <div class="status">
-                ONLINE
-            </div>
+            <div class="status">ONLINE</div>
 
             <h2>AINHACK COD</h2>
 
-            <p>
-                Ferramenta premium disponível para download exclusivo.
-            </p>
+            <p>Ferramenta premium disponível para download exclusivo.</p>
 
             <div class="info">
-
                 VERSION: 2.5.1<br>
                 SIZE: 32MB<br>
                 STATUS: UPDATED<br>
                 SERVER: ONLINE
-
             </div>
 
-            <button onclick="download()">
-                DOWNLOAD
-            </button>
+            <button onclick="downloadApp()">DOWNLOAD</button>
 
             <div class="progress" id="progress">
-
                 <div class="bar">
                     <div class="fill" id="fill"></div>
                 </div>
-
             </div>
 
         </div>
-
     </div>
 
     <div class="console">
-
         <h3>DOWNLOAD CONSOLE</h3>
-
         <div class="logs" id="logs">
-
-            > Secure server connected...<br>
-            > Waiting user action...<br>
-            > Download node online...<br>
-            > System operational... <span class="blink">█</span>
-
+            > System ready...<br>
+            > Waiting action... <span class="blink">█</span>
         </div>
-
     </div>
 
 </div>
 
 <script>
 
-function download(){
+let deferredPrompt;
+
+// captura evento de instalação PWA
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+});
+
+function downloadApp(){
 
     let progress = document.getElementById("progress");
     let fill = document.getElementById("fill");
@@ -298,10 +273,9 @@ function download(){
     let width = 0;
 
     logs.innerHTML = `
-        > Connecting download server...<br>
-        > Preparing secure transfer...<br>
-        > Download initialized...<br>
-        > Transferring package... <span class="blink">█</span>
+        > Preparing system...<br>
+        > Checking PWA availability...<br>
+        > Ready to install app... <span class="blink">█</span>
     `;
 
     let interval = setInterval(() => {
@@ -311,20 +285,29 @@ function download(){
             clearInterval(interval);
 
             logs.innerHTML = `
-                > Download completed successfully...<br>
-                > File verified...<br>
-                > AINHACK COD ready...<br>
-                > Session stable... <span class="blink">█</span>
+                > Installation ready...<br>
+                > Opening prompt...<br>
+                > Confirm installation on browser... <span class="blink">█</span>
             `;
 
+            // abre instalação do PWA
+            if(deferredPrompt){
+                deferredPrompt.prompt();
+
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                });
+
+            } else {
+                logs.innerHTML += "<br>> Install not available in this browser.";
+            }
+
         } else {
-
             width++;
-
             fill.style.width = width + "%";
         }
 
-    }, 35);
+    }, 25);
 }
 
 </script>
