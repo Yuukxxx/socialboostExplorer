@@ -124,6 +124,11 @@ button:hover {
     color: #000;
 }
 
+.back {
+    background: #222;
+    color: #00ffcc;
+}
+
 @keyframes blink {
     50% {
         opacity: 0.3;
@@ -137,19 +142,36 @@ button:hover {
 <div class="box">
 
     <h1>HAXCOD</h1>
-    <div class="sub">Área de acesso restrito</div>
+
+    <div class="sub">
+        Área de acesso restrito
+    </div>
 
     <input type="text" id="user" placeholder="Usuário">
+
     <input type="password" id="pass" placeholder="Senha">
 
-    <button onclick="entrar()">Acessar</button>
+    <button onclick="entrar()">
+        Acessar
+    </button>
 
-    <div id="loading">Validando credenciais...</div>
-    <div id="msg">Acesso autorizado</div>
+    <button class="back" onclick="voltarPagina()">
+        Voltar
+    </button>
+
+    <div id="loading">
+        Validando credenciais...
+    </div>
+
+    <div id="msg">
+        Acesso autorizado
+    </div>
 
     <div class="pagamento">
 
-        <p><strong>Libere seu acesso</strong></p>
+        <p>
+            <strong>Libere seu acesso</strong>
+        </p>
 
         <p style="font-size:12px;color:#ddd;">
             Para ativar sua conta, realize o pagamento via Pix utilizando o QR Code abaixo ou a chave Pix.
@@ -189,8 +211,10 @@ function entrar() {
     let pass = document.getElementById("pass").value;
 
     if(user === "" || pass === "") {
+
         alert("Preencha todos os campos");
         return;
+
     }
 
     document.getElementById("loading").style.display = "block";
@@ -200,16 +224,26 @@ function entrar() {
         if(user === "Haxcod101" && pass === "10101") {
 
             document.getElementById("loading").style.display = "none";
+
             document.getElementById("msg").style.display = "block";
+
+            window.location.href = "https://yuukxxx.github.io/socialboostExplorer/Menu.html";
 
         } else {
 
             document.getElementById("loading").style.display = "none";
+
             alert("Usuário ou senha incorretos");
 
         }
 
     }, 2000);
+}
+
+function voltarPagina(){
+
+    history.back();
+
 }
 
 function copiarPix(btn) {
@@ -219,9 +253,13 @@ function copiarPix(btn) {
     if (navigator.clipboard) {
 
         navigator.clipboard.writeText(pix).then(() => {
+
             sucesso(btn);
+
         }).catch(() => {
+
             fallbackCopy(pix, btn);
+
         });
 
     } else {
