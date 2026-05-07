@@ -194,7 +194,7 @@ button:hover{
     ACCESS GRANTED
 
     <span>
-        Inicializando sessão segura...
+        Initializing secure session...
     </span>
 
 </div>
@@ -226,7 +226,7 @@ button:hover{
 
         <div class="card">
 
-            <h2>DOWNLOADS</h2>
+            <h2>DOWNLOAD</h2>
 
             <p>
                 Arquivos premium liberados para membros VIP.
@@ -246,7 +246,7 @@ button:hover{
                 Ferramentas privadas disponíveis no sistema.
             </p>
 
-            <button>
+            <button onclick="tools()">
                 ACESSAR
             </button>
 
@@ -358,9 +358,15 @@ function downloads(){
 
 }
 
+function tools(){
+
+    window.location.href = "Tools.html";
+
+}
+
 function voltarPagina(){
 
-    history.back();
+    window.location.href = "Index.html";
 
 }
 
