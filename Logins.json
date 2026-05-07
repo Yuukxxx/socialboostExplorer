@@ -1,0 +1,48 @@
+const database = {
+  users: [
+
+    // FREE
+    {
+      id: "FREE-001",
+      pass: "free",
+      plan: "FREE"
+    },
+
+    // VIP 1 MÊS
+    {
+      id: "VIP1-AX91",
+      pass: "1010",
+      plan: "VIP 1 MÊS"
+    },
+    {
+      id: "VIP1-BK22",
+      pass: "1010",
+      plan: "VIP 1 MÊS"
+    },
+
+    // VIP 5 MESES
+    {
+      id: "VIP5-ME55",
+      pass: "1010",
+      plan: "VIP 5 MESES"
+    },
+    {
+      id: "VIP5-QW88",
+      pass: "1010",
+      plan: "VIP 5 MESES"
+    },
+
+    // VIP 1 ANO
+    {
+      id: "VIP12-YZ99",
+      pass: "1010",
+      plan: "VIP 1 ANO"
+    },
+    {
+      id: "VIP12-PL77",
+      pass: "1010",
+      plan: "VIP 1 ANO"
+    }
+
+  ]
+};
