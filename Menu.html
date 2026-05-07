@@ -69,6 +69,7 @@ body{
     backdrop-filter:blur(4px);
     transition:0.3s;
     box-shadow:0 0 20px rgba(0,255,204,0.05);
+    position:relative;
 }
 
 .card:hover{
@@ -110,6 +111,27 @@ button:hover{
     background:#222;
     color:#00ffcc;
     margin-top:15px;
+}
+
+/* 🔒 BLOQUEADO */
+.locked{
+    opacity:0.35;
+    filter:grayscale(1);
+    pointer-events:none;
+    position:relative;
+}
+
+.locked::after{
+    content:"🔒 BLOQUEADO";
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:10px;
+    color:#ff4444;
+    background:rgba(0,0,0,0.6);
+    padding:4px 6px;
+    border-radius:6px;
+    border:1px solid #ff4444;
 }
 
 .status{
@@ -187,16 +209,12 @@ button:hover{
 
 </style>
 </head>
+
 <body>
 
 <div class="loader" id="loader">
-
-    ACCESSO GARANTIDO
-
-    <span>
-        Initializing secure session...
-    </span>
-
+    ACCESS GRANTED
+    <span>Initializing secure session...</span>
 </div>
 
 <div class="overlay">
@@ -204,15 +222,8 @@ button:hover{
     <div class="topo">
 
         <div>
-
-            <div class="logo">
-                HAXCOD MENU
-            </div>
-
-            <button class="back" onclick="voltarPagina()">
-                VOLTAR
-            </button>
-
+            <div class="logo">HAXCOD HUB</div>
+            <button class="back" onclick="voltarPagina()">VOLTAR</button>
         </div>
 
         <div class="userbox">
@@ -225,59 +236,29 @@ button:hover{
     <div class="grid">
 
         <div class="card">
-
             <h2>DOWNLOAD</h2>
-
-            <p>
-                Arquivos premium liberados para membros VIP.
-            </p>
-
-            <button onclick="downloads()">
-                ABRIR
-            </button>
-
+            <p>Arquivos premium liberados para membros VIP.</p>
+            <button onclick="downloads()">ABRIR</button>
         </div>
 
         <div class="card">
-
             <h2>TOOLS</h2>
-
-            <p>
-                Ferramentas privadas disponíveis no sistema.
-            </p>
-
-            <button onclick="tools()">
-                ACESSAR
-            </button>
-
+            <p>Ferramentas privadas disponíveis no sistema.</p>
+            <button onclick="tools()">ACESSAR</button>
         </div>
 
-        <div class="card">
-
+        <!-- 🔒 STATUS BLOQUEADO -->
+        <div class="card locked">
             <h2>STATUS</h2>
-
-            <p>
-                Monitoramento dos servidores em tempo real.
-            </p>
-
-            <button>
-                VERIFICAR
-            </button>
-
+            <p>Monitoramento dos servidores em tempo real.</p>
+            <button>VERIFICAR</button>
         </div>
 
-        <div class="card">
-
+        <!-- 🔒 SUPPORT BLOQUEADO -->
+        <div class="card locked">
             <h2>SUPPORT</h2>
-
-            <p>
-                Suporte direto e comunicação rápida.
-            </p>
-
-            <button onclick="suporte()">
-                WHATSAPP
-            </button>
-
+            <p>Suporte direto e comunicação rápida.</p>
+            <button>WHATSAPP</button>
         </div>
 
     </div>
@@ -285,42 +266,27 @@ button:hover{
     <div class="status">
 
         <div class="statusbox">
-
             USUÁRIOS ONLINE
-
-            <div class="numero" id="online">
-                127
-            </div>
-
+            <div class="numero" id="online">127</div>
         </div>
 
         <div class="statusbox">
-
             SERVIDOR
-
-            <div class="numero">
-                ONLINE
-            </div>
-
+            <div class="numero">ONLINE</div>
         </div>
 
     </div>
 
     <div class="console">
-
         <h3>CONSOLE</h3>
-
         <div class="logs" id="logs">
-
             > Establishing encrypted connection...<br>
             > Loading secure modules...<br>
             > Session initialized...<br>
             > User authenticated...<br>
             > HAXCOD HUB connected...<br>
             > Waiting commands... <span class="blink">█</span>
-
         </div>
-
     </div>
 
 </div>
@@ -328,46 +294,24 @@ button:hover{
 <script>
 
 setTimeout(() => {
-
     document.getElementById("loader").style.display = "none";
-
 }, 2500);
 
 setInterval(() => {
-
     let random = Math.floor(Math.random() * 80) + 90;
-
     document.getElementById("online").innerText = random;
-
 }, 3000);
 
-function suporte(){
-
-    let numero = "5511949946730";
-
-    let mensagem = encodeURIComponent(
-        "Olá, preciso de suporte no painel HAXCOD HUB."
-    );
-
-    window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
-}
-
 function downloads(){
-
     window.location.href = "Download.html";
-
 }
 
 function tools(){
-
     window.location.href = "Tools.html";
-
 }
 
 function voltarPagina(){
-
     window.location.href = "Index.html";
-
 }
 
 </script>
