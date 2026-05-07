@@ -1,80 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAXCOD HUB</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Courier New', monospace;
+    background:url('https://look.jmgbb.com/images/gs5fFNPoOE.png') no-repeat center center fixed;
+    background-size:cover;
+    color:#00ffcc;
+    overflow-x:hidden;
+}
+
+.overlay{
+    min-height:100vh;
+    background:rgba(0,0,0,0.82);
+    padding:25px;
+}
+
+.topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.logo{
+    font-size:30px;
+    letter-spacing:5px;
+    text-shadow:0 0 15px #00ffcc;
+}
+
+.userbox{
+    background:rgba(0,255,204,0.08);
+    border:1px solid rgba(0,255,204,0.3);
+    padding:12px 18px;
+    border-radius:14px;
+    backdrop-filter:blur(5px);
+    box-shadow:0 0 15px rgba(0,255,204,0.1);
+}
+
+.userbox span{
+    color:#00ff88;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:rgba(15,15,15,0.72);
+    border:1px solid rgba(0,255,204,0.15);
+    border-radius:18px;
+    padding:25px;
+    backdrop-filter:blur(4px);
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(0,255,204,0.05);
+    position:relative;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 25px rgba(0,255,204,0.25);
+    border-color:#00ffcc;
+}
+
+.card h2{
+    margin-bottom:12px;
+    font-size:22px;
+}
+
+.card p{
+    color:#ccc;
+    font-size:13px;
+    margin-bottom:18px;
+    line-height:1.5;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#00ffcc;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#00ffaa;
+    transform:scale(1.02);
+}
+
+.back{
+    background:#222;
+    color:#00ffcc;
+    margin-top:15px;
+}
+
+/* 🔒 BLOQUEADO */
+.locked{
+    opacity:0.35;
+    filter:grayscale(1);
+    pointer-events:none;
+    position:relative;
+}
+
+.locked::after{
+    content:"🔒 BLOQUEADO";
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:10px;
+    color:#ff4444;
+    background:rgba(0,0,0,0.6);
+    padding:4px 6px;
+    border-radius:6px;
+    border:1px solid #ff4444;
+}
+
+.status{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+.statusbox{
+    background:rgba(15,15,15,0.72);
+    border:1px solid rgba(0,255,204,0.15);
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+}
+
+.numero{
+    font-size:35px;
+    color:#00ff88;
+    text-shadow:0 0 10px #00ff88;
+    margin-top:10px;
+}
+
+.console{
+    margin-top:35px;
+    background:rgba(0,0,0,0.78);
+    border-radius:18px;
+    padding:25px;
+    border:1px solid rgba(0,255,204,0.15);
+}
+
+.console h3{
+    margin-bottom:15px;
+}
+
+.logs{
+    color:#00ff99;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.blink{
+    animation:blink 1s infinite;
+}
+
+.loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+    flex-direction:column;
+    color:#00ffcc;
+    font-size:18px;
+    letter-spacing:2px;
+}
+
+.loader span{
+    margin-top:15px;
+    font-size:13px;
+    color:#00ff88;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0.3;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+    ACCESS GRANTED
+    <span>Initializing secure session...</span>
+</div>
+
+<div class="overlay">
+
+    <div class="topo">
+
+        <div>
+            <div class="logo">HAXCOD HUB</div>
+            <button class="back" onclick="voltarPagina()">VOLTAR</button>
+        </div>
+
+        <div class="userbox">
+            USER: <span>HAXCOD101</span><br>
+            STATUS: <span>ELITE VIP</span>
+        </div>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>DOWNLOAD</h2>
+            <p>Arquivos premium liberados para membros VIP.</p>
+            <button onclick="downloads()">ABRIR</button>
+        </div>
+
+        <div class="card">
+            <h2>TOOLS</h2>
+            <p>Ferramentas privadas disponíveis no sistema.</p>
+            <button onclick="tools()">ACESSAR</button>
+        </div>
+
+        <!-- 🔒 STATUS BLOQUEADO -->
+        <div class="card locked">
+            <h2>STATUS</h2>
+            <p>Monitoramento dos servidores em tempo real.</p>
+            <button>VERIFICAR</button>
+        </div>
+
+        <!-- 🔒 SUPPORT BLOQUEADO -->
+        <div class="card locked">
+            <h2>SUPPORT</h2>
+            <p>Suporte direto e comunicação rápida.</p>
+            <button>WHATSAPP</button>
+        </div>
+
+    </div>
+
+    <div class="status">
+
+        <div class="statusbox">
+            USUÁRIOS ONLINE
+            <div class="numero" id="online">127</div>
+        </div>
+
+        <div class="statusbox">
+            SERVIDOR
+            <div class="numero">ONLINE</div>
+        </div>
+
+    </div>
+
+    <div class="console">
+        <h3>CONSOLE</h3>
+        <div class="logs" id="logs">
+            > Establishing encrypted connection...<br>
+            > Loading secure modules...<br>
+            > Session initialized...<br>
+            > User authenticated...<br>
+            > HAXCOD HUB connected...<br>
+            > Waiting commands... <span class="blink">█</span>
+        </div>
+    </div>
+
+</div>
+
 <script>
 
-window.addEventListener("DOMContentLoaded", () => {
+setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+}, 2500);
 
-    setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-    }, 2000);
+setInterval(() => {
+    let random = Math.floor(Math.random() * 80) + 90;
+    document.getElementById("online").innerText = random;
+}, 3000);
 
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-
-    if(!user){
-        window.location.href = "index.html";
-        return;
-    }
-
-    // 🔐 ATUALIZA UI
-    const userIdEl = document.getElementById("userId");
-    const userPlanEl = document.getElementById("userPlan");
-
-    if(userIdEl) userIdEl.innerText = user.id;
-    if(userPlanEl) userPlanEl.innerText = user.plan;
-
-    // ===== CONTROLE DE ACESSO =====
-    function applyPermissions(){
-
-        const cards = document.querySelectorAll(".card");
-
-        const download = cards[0];
-        const tools = cards[1];
-        const status = cards[2];
-        const support = cards[3];
-
-        // 🆓 FREE
-        if(user.plan === "FREE"){
-            tools.classList.add("locked");
-            status.classList.add("locked");
-            support.classList.add("locked");
-            return;
-        }
-
-        // 💳 VIP
-        if(user.plan.includes("VIP")){
-            cards.forEach(c => c.classList.remove("locked"));
-        }
-    }
-
-    applyPermissions();
-
-    // contador fake
-    setInterval(() => {
-        let random = Math.floor(Math.random() * 80) + 90;
-        const online = document.getElementById("online");
-        if(online) online.innerText = random;
-    }, 3000);
-
-});
-
-// navegação
 function downloads(){
     window.location.href = "Download.html";
 }
 
 function tools(){
-
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-
-    if(user.plan === "FREE"){
-        alert("Área exclusiva para VIP");
-        return;
-    }
-
     window.location.href = "Tools.html";
 }
 
 function voltarPagina(){
-    localStorage.removeItem("currentUser");
     window.location.href = "Index.html";
 }
 
 </script>
+
+</body>
+</html>
