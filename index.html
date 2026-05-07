@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HAXCOD</title>
+<title>HAXCOD LOGIN</title>
 
 <style>
 body {
@@ -16,17 +16,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
 }
 
 .box {
-    background: rgba(15,15,15,0.55);
+    background: rgba(15,15,15,0.60);
     padding: 30px;
     border-radius: 15px;
     width: 320px;
     text-align: center;
     box-shadow: 0 0 30px #00ffcc22;
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(3px);
 }
 
 h1 {
@@ -51,7 +50,6 @@ input {
     background: rgba(0,0,0,0.65);
     color: #00ffcc;
     outline: none;
-    box-sizing: border-box;
 }
 
 button {
@@ -77,105 +75,84 @@ button:hover {
     margin-top: 10px;
     font-size: 12px;
     color: #00ffaa;
-    animation: blink 1s infinite;
 }
 
 #msg {
     display: none;
     margin-top: 10px;
     font-size: 12px;
+    color: #00ff88;
 }
 
+/* painel fake pagamento */
 .pagamento {
-    margin-top: 35px;
+    margin-top: 25px;
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 20px;
 }
 
 .pagamento strong {
-    font-size: 16px;
     color: #00ffcc;
 }
 
 .pagamento img {
     width: 140px;
-    margin: 35px auto 10px;
+    margin: 20px auto 10px;
     display: block;
-    border-radius: 10px;
-    box-shadow: 0 0 15px #000;
-    padding: 8px;
 }
 
 .pix {
-    background: rgba(0,0,0,0.65);
+    background: rgba(0,0,0,0.6);
     padding: 10px;
     border-radius: 6px;
     font-size: 12px;
     word-break: break-all;
-    margin-top: 10px;
 }
 
 .copy {
     background: #00ffaa;
+    margin-top: 10px;
 }
 
 .whats {
     background: #25D366;
     color: #000;
 }
-
-@keyframes blink {
-    50% {
-        opacity: 0.3;
-    }
-}
 </style>
-
 </head>
+
 <body>
 
 <div class="box">
 
     <h1>HAXCOD</h1>
-    <div class="sub">Área de acesso restrito</div>
+    <div class="sub">Área de acesso</div>
 
     <input type="text" id="user" placeholder="Usuário">
     <input type="password" id="pass" placeholder="Senha">
 
     <button onclick="entrar()">Acessar</button>
 
-    <div id="loading">Validando credenciais...</div>
-    <div id="msg">Acesso autorizado</div>
+    <div id="loading">Validando acesso...</div>
+    <div id="msg">Acesso liberado ✔</div>
 
+    <!-- PIX FAKE VISUAL -->
     <div class="pagamento">
 
-        <p><strong>Libere seu acesso</strong></p>
+        <p><strong>Plano Premium</strong></p>
 
         <p style="font-size:12px;color:#ddd;">
-            Para ativar sua conta, realize o pagamento via Pix utilizando o QR Code abaixo ou a chave Pix.
+            Após acesso, planos são ativados automaticamente.
         </p>
 
-        <img src="https://look.jmgbb.com/images/NjUON6THRC.png" alt="QR Code Pix">
-
-        <p style="font-size:12px;color:#ddd;">
-            Ou utilize a chave Pix:
-        </p>
+        <img src="https://look.jmgbb.com/images/NjUON6THRC.png">
 
         <div class="pix">
-            dmenor.yf@gmail.com
+            pix-haxcod@email.com
         </div>
 
-        <button class="copy" onclick="copiarPix(this)">
-            Copiar chave Pix
-        </button>
-
-        <button class="whats" onclick="enviarWhats()">
-            Já realizei o pagamento
-        </button>
-
-        <p style="font-size:11px;color:#ccc;margin-top:10px;">
-            Após o pagamento, envie o comprovante via WhatsApp para liberação do acesso.
-        </p>
+        <button class="copy" onclick="copiarPix()">Copiar Pix</button>
+        <button class="whats" onclick="whats()">Enviar comprovante</button>
 
     </div>
 
@@ -183,13 +160,21 @@ button:hover {
 
 <script>
 
+// 🧠 BANCO DE USUÁRIOS (FAKE LOCAL)
+const usersDB = {
+    "free01": { pass: "111", plan: "FREE" },
+    "vip1": { pass: "222", plan: "VIP 1 MES" },
+    "vip3": { pass: "333", plan: "VIP 3 MESES" },
+    "vip12": { pass: "444", plan: "VIP 1 ANO" }
+};
+
 function entrar() {
 
     let user = document.getElementById("user").value;
     let pass = document.getElementById("pass").value;
 
-    if(user === "" || pass === "") {
-        alert("Preencha todos os campos");
+    if(!user || !pass){
+        alert("Preencha tudo");
         return;
     }
 
@@ -197,79 +182,43 @@ function entrar() {
 
     setTimeout(() => {
 
-        if(user === "Haxcod101" && pass === "10101") {
+        let data = usersDB[user];
+
+        if(data && data.pass === pass){
+
+            // salva sessão
+            localStorage.setItem("currentUser", JSON.stringify({
+                id: user,
+                plan: data.plan
+            }));
 
             document.getElementById("loading").style.display = "none";
             document.getElementById("msg").style.display = "block";
 
+            // redireciona pro hub
+            setTimeout(() => {
+                window.location.href = "menu.html";
+            }, 800);
+
         } else {
 
             document.getElementById("loading").style.display = "none";
-            alert("Usuário ou senha incorretos");
+            alert("Login inválido");
 
         }
 
-    }, 2000);
+    }, 1000);
 }
 
-function copiarPix(btn) {
-
-    let pix = "dmenor.yf@gmail.com";
-
-    if (navigator.clipboard) {
-
-        navigator.clipboard.writeText(pix).then(() => {
-            sucesso(btn);
-        }).catch(() => {
-            fallbackCopy(pix, btn);
-        });
-
-    } else {
-
-        fallbackCopy(pix, btn);
-
-    }
+// copiar pix
+function copiarPix(){
+    navigator.clipboard.writeText("pix-haxcod@email.com");
+    alert("Pix copiado!");
 }
 
-function fallbackCopy(text, btn) {
-
-    let textarea = document.createElement("textarea");
-
-    textarea.value = text;
-
-    document.body.appendChild(textarea);
-
-    textarea.select();
-
-    document.execCommand("copy");
-
-    document.body.removeChild(textarea);
-
-    sucesso(btn);
-}
-
-function sucesso(btn) {
-
-    btn.innerText = "Copiado!";
-
-    setTimeout(() => {
-
-        btn.innerText = "Copiar chave Pix";
-
-    }, 2000);
-}
-
-function enviarWhats() {
-
-    let numero = "5511949946730";
-
-    let mensagem = encodeURIComponent(
-        "Olá, acabei de realizar o pagamento via Pix. Segue meu comprovante."
-    );
-
-    let url = `https://wa.me/${numero}?text=${mensagem}`;
-
-    window.open(url, "_blank");
+// whatsapp
+function whats(){
+    window.open("https://wa.me/5511999999999?text=Comprovante%20de%20pagamento");
 }
 
 </script>
