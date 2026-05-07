@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAXCOD DOWNLOADS</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Courier New', monospace;
+    background:url('https://look.jmgbb.com/images/gs5fFNPoOE.png') no-repeat center center fixed;
+    background-size:cover;
+    color:#00ffcc;
+}
+
+.overlay{
+    min-height:100vh;
+    background:rgba(0,0,0,0.84);
+    padding:25px;
+}
+
+.topo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.logo{
+    font-size:30px;
+    letter-spacing:5px;
+    text-shadow:0 0 15px #00ffcc;
+}
+
+.back{
+    background:#00ffcc;
+    color:#000;
+    padding:12px 18px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.2s;
+}
+
+.back:hover{
+    background:#00ffaa;
+    transform:scale(1.03);
+}
+
+.banner{
+    background:rgba(15,15,15,0.72);
+    border:1px solid rgba(0,255,204,0.15);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:30px;
+    box-shadow:0 0 20px rgba(0,255,204,0.08);
+}
+
+.banner h1{
+    margin-bottom:12px;
+    text-shadow:0 0 10px #00ffcc;
+}
+
+.banner p{
+    color:#ccc;
+    line-height:1.7;
+    font-size:14px;
+}
+
+.card{
+    max-width:420px;
+    margin:auto;
+    background:rgba(15,15,15,0.78);
+    border:1px solid rgba(0,255,204,0.15);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 25px rgba(0,255,204,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:#00ffcc;
+    box-shadow:0 0 30px rgba(0,255,204,0.25);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.content{
+    padding:25px;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    margin-bottom:15px;
+    background:rgba(0,255,100,0.12);
+    border:1px solid #00ff88;
+    color:#00ff88;
+}
+
+.content h2{
+    margin-bottom:10px;
+    font-size:24px;
+}
+
+.content p{
+    color:#ccc;
+    font-size:13px;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.info{
+    margin-bottom:20px;
+    line-height:1.8;
+    font-size:13px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#00ffcc;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+    font-size:15px;
+}
+
+button:hover{
+    background:#00ffaa;
+    transform:scale(1.02);
+}
+
+.progress{
+    margin-top:20px;
+    display:none;
+}
+
+.bar{
+    width:100%;
+    height:14px;
+    background:#111;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid rgba(0,255,204,0.15);
+}
+
+.fill{
+    width:0%;
+    height:100%;
+    background:#00ff88;
+    transition:0.3s;
+}
+
+.console{
+    margin-top:35px;
+    background:rgba(0,0,0,0.78);
+    border-radius:18px;
+    padding:25px;
+    border:1px solid rgba(0,255,204,0.15);
+}
+
+.console h3{
+    margin-bottom:15px;
+}
+
+.logs{
+    color:#00ff99;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.blink{
+    animation:blink 1s infinite;
+}
+
+@keyframes blink{
+    50%{
+        opacity:0.3;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <div class="topo">
+
+        <div class="logo">
+            HAXCOD DOWNLOADS
+        </div>
+
+        <a href="#" class="back">
+            VOLTAR
+        </a>
+
+    </div>
+
+    <div class="banner">
+
+        <h1>DOWNLOAD CENTER</h1>
+
+        <p>
+            Área premium para membros VIP. Todos os arquivos são verificados e atualizados automaticamente pelo sistema HAXCOD HUB.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <img src="https://look.jmgbb.com/images/gs5fFNPoOE.png">
+
+        <div class="content">
+
+            <div class="status">
+                ONLINE
+            </div>
+
+            <h2>AINHACK COD</h2>
+
+            <p>
+                Ferramenta premium disponível para download exclusivo.
+            </p>
+
+            <div class="info">
+
+                VERSION: 2.5.1<br>
+                SIZE: 32MB<br>
+                STATUS: UPDATED<br>
+                SERVER: ONLINE
+
+            </div>
+
+            <button onclick="download()">
+                DOWNLOAD
+            </button>
+
+            <div class="progress" id="progress">
+
+                <div class="bar">
+                    <div class="fill" id="fill"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="console">
+
+        <h3>DOWNLOAD CONSOLE</h3>
+
+        <div class="logs" id="logs">
+
+            > Secure server connected...<br>
+            > Waiting user action...<br>
+            > Download node online...<br>
+            > System operational... <span class="blink">█</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function download(){
+
+    let progress = document.getElementById("progress");
+    let fill = document.getElementById("fill");
+    let logs = document.getElementById("logs");
+
+    progress.style.display = "block";
+
+    let width = 0;
+
+    logs.innerHTML = `
+        > Connecting download server...<br>
+        > Preparing secure transfer...<br>
+        > Download initialized...<br>
+        > Transferring package... <span class="blink">█</span>
+    `;
+
+    let interval = setInterval(() => {
+
+        if(width >= 100){
+
+            clearInterval(interval);
+
+            logs.innerHTML = `
+                > Download completed successfully...<br>
+                > File verified...<br>
+                > AINHACK COD ready...<br>
+                > Session stable... <span class="blink">█</span>
+            `;
+
+        } else {
+
+            width++;
+
+            fill.style.width = width + "%";
+        }
+
+    }, 35);
+}
+
+</script>
+
+</body>
+</html>
