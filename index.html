@@ -32,7 +32,6 @@ h1 {
     margin-bottom: 5px;
     letter-spacing: 4px;
     font-size: 28px;
-    text-shadow: 0 0 10px #00ffcc88;
 }
 
 .sub {
@@ -62,12 +61,6 @@ button {
     color: #000;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-button:hover {
-    background: #00ffaa;
-    transform: scale(1.02);
 }
 
 #loading {
@@ -82,41 +75,6 @@ button:hover {
     margin-top: 10px;
     font-size: 12px;
     color: #00ff88;
-}
-
-/* painel fake pagamento */
-.pagamento {
-    margin-top: 25px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 20px;
-}
-
-.pagamento strong {
-    color: #00ffcc;
-}
-
-.pagamento img {
-    width: 140px;
-    margin: 20px auto 10px;
-    display: block;
-}
-
-.pix {
-    background: rgba(0,0,0,0.6);
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    word-break: break-all;
-}
-
-.copy {
-    background: #00ffaa;
-    margin-top: 10px;
-}
-
-.whats {
-    background: #25D366;
-    color: #000;
 }
 </style>
 </head>
@@ -136,31 +94,11 @@ button:hover {
     <div id="loading">Validando acesso...</div>
     <div id="msg">Acesso liberado ✔</div>
 
-    <!-- PIX FAKE VISUAL -->
-    <div class="pagamento">
-
-        <p><strong>Plano Premium</strong></p>
-
-        <p style="font-size:12px;color:#ddd;">
-            Após acesso, planos são ativados automaticamente.
-        </p>
-
-        <img src="https://look.jmgbb.com/images/NjUON6THRC.png">
-
-        <div class="pix">
-            pix-haxcod@email.com
-        </div>
-
-        <button class="copy" onclick="copiarPix()">Copiar Pix</button>
-        <button class="whats" onclick="whats()">Enviar comprovante</button>
-
-    </div>
-
 </div>
 
 <script>
 
-// 🧠 BANCO DE USUÁRIOS (FAKE LOCAL)
+// 🧠 BANCO FAKE
 const usersDB = {
     "free01": { pass: "111", plan: "FREE" },
     "vip1": { pass: "222", plan: "VIP 1 MES" },
@@ -170,8 +108,8 @@ const usersDB = {
 
 function entrar() {
 
-    let user = document.getElementById("user").value;
-    let pass = document.getElementById("pass").value;
+    let user = document.getElementById("user").value.trim();
+    let pass = document.getElementById("pass").value.trim();
 
     if(!user || !pass){
         alert("Preencha tudo");
@@ -195,9 +133,11 @@ function entrar() {
             document.getElementById("loading").style.display = "none";
             document.getElementById("msg").style.display = "block";
 
-            // redireciona pro hub
+            console.log("Login OK, redirecionando...");
+
+            // 🔥 redirect seguro
             setTimeout(() => {
-                window.location.href = "menu.html";
+                window.location.href = "./menu.html";
             }, 800);
 
         } else {
@@ -208,17 +148,6 @@ function entrar() {
         }
 
     }, 1000);
-}
-
-// copiar pix
-function copiarPix(){
-    navigator.clipboard.writeText("pix-haxcod@email.com");
-    alert("Pix copiado!");
-}
-
-// whatsapp
-function whats(){
-    window.open("https://wa.me/5511999999999?text=Comprovante%20de%20pagamento");
 }
 
 </script>
