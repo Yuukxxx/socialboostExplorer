@@ -106,6 +106,12 @@ button:hover{
     transform:scale(1.02);
 }
 
+.back{
+    background:#222;
+    color:#00ffcc;
+    margin-top:15px;
+}
+
 .status{
     margin-top:30px;
     display:grid;
@@ -197,8 +203,16 @@ button:hover{
 
     <div class="topo">
 
-        <div class="logo">
-            HAXCOD HUB
+        <div>
+
+            <div class="logo">
+                HAXCOD HUB
+            </div>
+
+            <button class="back" onclick="voltarPagina()">
+                VOLTAR
+            </button>
+
         </div>
 
         <div class="userbox">
@@ -218,7 +232,9 @@ button:hover{
                 Arquivos premium liberados para membros VIP.
             </p>
 
-            <button>ABRIR</button>
+            <button onclick="downloads()">
+                ABRIR
+            </button>
 
         </div>
 
@@ -230,7 +246,9 @@ button:hover{
                 Ferramentas privadas disponíveis no sistema.
             </p>
 
-            <button>ACESSAR</button>
+            <button>
+                ACESSAR
+            </button>
 
         </div>
 
@@ -242,7 +260,9 @@ button:hover{
                 Monitoramento dos servidores em tempo real.
             </p>
 
-            <button>VERIFICAR</button>
+            <button>
+                VERIFICAR
+            </button>
 
         </div>
 
@@ -330,6 +350,18 @@ function suporte(){
     );
 
     window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
+}
+
+function downloads(){
+
+    window.location.href = "Downloads.html";
+
+}
+
+function voltarPagina(){
+
+    history.back();
+
 }
 
 </script>
