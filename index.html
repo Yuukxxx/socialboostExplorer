@@ -1,4 +1,3 @@
-
 <script>
 
 async function entrar(){
@@ -9,11 +8,9 @@ async function entrar(){
     const loading = document.getElementById("loading");
     const msg = document.getElementById("msg");
 
-    if(!user || !pass){
-
+    if(user === "" || pass === ""){
         alert("Preencha tudo");
         return;
-
     }
 
     loading.style.display = "block";
@@ -21,37 +18,39 @@ async function entrar(){
 
     try{
 
-        // CARREGA LOGINS
-        const response = await fetch("./Logins.json");
+        // CARREGA JSON
+        const response = await fetch("Logins.json");
 
-        const data = await response.json();
+        // TESTA SE EXISTE
+        if(!response.ok){
+
+            throw new Error("Arquivo não encontrado");
+
+        }
+
+        // CONVERTE JSON
+        const database = await response.json();
 
         // PROCURA LOGIN
-        const foundUser = data.users.find(acc =>
-            acc.user === user &&
-            acc.pass === pass
-        );
+        const account = database.users.find(function(acc){
 
-        setTimeout(() => {
+            return acc.id === user && acc.pass === pass;
 
-            if(foundUser){
+        });
 
-                // SALVA TOKEN
-                localStorage.setItem(
-                    "token",
-                    btoa(user + ":" + pass)
-                );
+        setTimeout(function(){
 
-                localStorage.setItem(
-                    "plan",
-                    foundUser.plan
-                );
+            if(account){
+
+                // SALVA
+                localStorage.setItem("user", account.id);
+                localStorage.setItem("plan", account.plan);
 
                 loading.style.display = "none";
                 msg.style.display = "block";
 
                 // REDIRECT
-                setTimeout(() => {
+                setTimeout(function(){
 
                     window.location.href = "Menu.html";
 
@@ -73,7 +72,7 @@ async function entrar(){
 
         console.error(error);
 
-        alert("Erro ao carregar logins.json");
+        alert("Erro ao carregar Logins.json");
 
     }
 
@@ -84,21 +83,6 @@ document.addEventListener("keydown", function(e){
 
     if(e.key === "Enter"){
         entrar();
-    }
-
-});
-
-// BLOQUEIOS
-document.addEventListener("contextmenu", e => e.preventDefault());
-
-document.addEventListener("keydown", function(e){
-
-    if(
-        e.key === "F12" ||
-        (e.ctrlKey && e.shiftKey && e.key === "I") ||
-        (e.ctrlKey && e.key === "u")
-    ){
-        e.preventDefault();
     }
 
 });
