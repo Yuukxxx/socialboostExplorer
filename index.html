@@ -1,12 +1,12 @@
 <script>
 
-// LOGIN CRIPTOGRAFADO BASE64
+// LOGIN OCULTO
 const encodedUser = "SGF4MTAx";
 const encodedPass = "MTAxMDE=";
 
-// DECODIFICA
-function decode(text){
-    return atob(text);
+// DECODIFICADOR
+function decode(value){
+    return atob(value);
 }
 
 function entrar(){
@@ -19,7 +19,7 @@ function entrar(){
 
     msg.style.display = "none";
 
-    if(user === "" || pass === ""){
+    if(!user || !pass){
         alert("Preencha tudo");
         return;
     }
@@ -32,14 +32,19 @@ function entrar(){
         const realUser = decode(encodedUser);
         const realPass = decode(encodedPass);
 
-        // VERIFICA
+        console.log(realUser, realPass);
+
+        // VERIFICAÇÃO
         if(user === realUser && pass === realPass){
 
-            // SESSÃO
-            localStorage.setItem("currentUser", btoa(JSON.stringify({
-                id: user,
-                level: "admin"
-            })));
+            // SALVA SESSÃO
+            localStorage.setItem(
+                "currentUser",
+                btoa(JSON.stringify({
+                    id: user,
+                    level: "admin"
+                }))
+            );
 
             loading.style.display = "none";
             msg.style.display = "block";
@@ -51,7 +56,7 @@ function entrar(){
 
             }, 1000);
 
-        } else {
+        }else{
 
             loading.style.display = "none";
 
@@ -71,10 +76,9 @@ document.addEventListener("keypress", function(e){
 
 });
 
-// DESATIVA CLICK DIREITO
+// BLOQUEIOS
 document.addEventListener("contextmenu", e => e.preventDefault());
 
-// BLOQUEIA F12 / INSPECIONAR
 document.onkeydown = function(e){
 
     if(
