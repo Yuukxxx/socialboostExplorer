@@ -1,156 +1,90 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HAXCOD LOGIN</title>
-
-<style>
-body {
-    margin: 0;
-    min-height: 100vh;
-    background: url('https://look.jmgbb.com/images/gs5fFNPoOE.png') no-repeat center center;
-    background-size: cover;
-    font-family: 'Courier New', monospace;
-    color: #00ffcc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.box {
-    background: rgba(15,15,15,0.60);
-    padding: 30px;
-    border-radius: 15px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 0 30px #00ffcc22;
-    backdrop-filter: blur(3px);
-}
-
-h1 {
-    margin-bottom: 5px;
-    letter-spacing: 4px;
-    font-size: 28px;
-}
-
-.sub {
-    color: #ccc;
-    font-size: 13px;
-    margin-bottom: 20px;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 8px;
-    background: rgba(0,0,0,0.65);
-    color: #00ffcc;
-    outline: none;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #00ffcc;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#loading {
-    display: none;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #00ffaa;
-}
-
-#msg {
-    display: none;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #00ff88;
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-
-    <h1>HAXCOD</h1>
-    <div class="sub">Área de acesso</div>
-
-    <input type="text" id="user" placeholder="Usuário">
-    <input type="password" id="pass" placeholder="Senha">
-
-    <button onclick="entrar()">Acessar</button>
-
-    <div id="loading">Validando acesso...</div>
-    <div id="msg">Acesso liberado ✔</div>
-
-</div>
-
 <script>
 
-// 🧠 BANCO FAKE
-const usersDB = {
-    "free01": { pass: "111", plan: "FREE" },
-    "vip1": { pass: "222", plan: "VIP 1 MES" },
-    "vip3": { pass: "333", plan: "VIP 3 MESES" },
-    "vip12": { pass: "444", plan: "VIP 1 ANO" }
-};
+// LOGIN CRIPTOGRAFADO BASE64
+const encodedUser = "SGF4MTAx";
+const encodedPass = "MTAxMDE=";
 
-function entrar() {
+// DECODIFICA
+function decode(text){
+    return atob(text);
+}
 
-    let user = document.getElementById("user").value.trim();
-    let pass = document.getElementById("pass").value.trim();
+function entrar(){
 
-    if(!user || !pass){
+    const user = document.getElementById("user").value.trim();
+    const pass = document.getElementById("pass").value.trim();
+
+    const loading = document.getElementById("loading");
+    const msg = document.getElementById("msg");
+
+    msg.style.display = "none";
+
+    if(user === "" || pass === ""){
         alert("Preencha tudo");
         return;
     }
 
-    document.getElementById("loading").style.display = "block";
+    loading.style.display = "block";
 
     setTimeout(() => {
 
-        let data = usersDB[user];
+        // LOGIN REAL
+        const realUser = decode(encodedUser);
+        const realPass = decode(encodedPass);
 
-        if(data && data.pass === pass){
+        // VERIFICA
+        if(user === realUser && pass === realPass){
 
-            // salva sessão
-            localStorage.setItem("currentUser", JSON.stringify({
+            // SESSÃO
+            localStorage.setItem("currentUser", btoa(JSON.stringify({
                 id: user,
-                plan: data.plan
-            }));
+                level: "admin"
+            })));
 
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("msg").style.display = "block";
+            loading.style.display = "none";
+            msg.style.display = "block";
 
-            console.log("Login OK, redirecionando...");
-
-            // 🔥 redirect seguro
+            // REDIRECT
             setTimeout(() => {
-                window.location.href = "./Menu.html";
-            }, 800);
+
+                window.location.href = "Menu.html";
+
+            }, 1000);
 
         } else {
 
-            document.getElementById("loading").style.display = "none";
-            alert("Login inválido");
+            loading.style.display = "none";
+
+            alert("Acesso negado");
 
         }
 
-    }, 1000);
+    }, 1200);
 }
 
-</script>
+// ENTER
+document.addEventListener("keypress", function(e){
 
-</body>
-</html>
+    if(e.key === "Enter"){
+        entrar();
+    }
+
+});
+
+// DESATIVA CLICK DIREITO
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// BLOQUEIA F12 / INSPECIONAR
+document.onkeydown = function(e){
+
+    if(
+        e.keyCode == 123 ||
+        (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
+        (e.ctrlKey && e.keyCode == 85)
+    ){
+        return false;
+    }
+
+};
+
+</script>
