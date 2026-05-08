@@ -1,15 +1,7 @@
+<!-- SCRIPT LOGIN -->
 <script>
 
-// LOGIN OCULTO
-const encodedUser = "SGF4MTAx";
-const encodedPass = "MTAxMDE=";
-
-// DECODIFICADOR
-function decode(value){
-    return atob(value);
-}
-
-function entrar(){
+async function entrar(){
 
     const user = document.getElementById("user").value.trim();
     const pass = document.getElementById("pass").value.trim();
@@ -17,58 +9,78 @@ function entrar(){
     const loading = document.getElementById("loading");
     const msg = document.getElementById("msg");
 
-    msg.style.display = "none";
-
     if(!user || !pass){
+
         alert("Preencha tudo");
         return;
+
     }
 
     loading.style.display = "block";
+    msg.style.display = "none";
 
-    setTimeout(() => {
+    try{
 
-        // LOGIN REAL
-        const realUser = decode(encodedUser);
-        const realPass = decode(encodedPass);
+        // CARREGA LOGINS
+        const response = await fetch("./logins.json");
 
-        console.log(realUser, realPass);
+        const data = await response.json();
 
-        // VERIFICAÇÃO
-        if(user === realUser && pass === realPass){
+        // PROCURA LOGIN
+        const foundUser = data.users.find(acc =>
+            acc.user === user &&
+            acc.pass === pass
+        );
 
-            // SALVA SESSÃO
-            localStorage.setItem(
-                "currentUser",
-                btoa(JSON.stringify({
-                    id: user,
-                    level: "admin"
-                }))
-            );
+        setTimeout(() => {
 
-            loading.style.display = "none";
-            msg.style.display = "block";
+            if(foundUser){
 
-            // REDIRECT
-            setTimeout(() => {
+                // SALVA TOKEN
+                localStorage.setItem(
+                    "token",
+                    btoa(user + ":" + pass)
+                );
 
-                window.location.href = "Menu.html";
+                localStorage.setItem(
+                    "plan",
+                    foundUser.plan
+                );
 
-            }, 1000);
+                loading.style.display = "none";
+                msg.style.display = "block";
 
-        }else{
+                // REDIRECT
+                setTimeout(() => {
 
-            loading.style.display = "none";
+                    window.location.href = "Menu.html";
 
-            alert("Acesso negado");
+                }, 800);
 
-        }
+            }else{
 
-    }, 1200);
+                loading.style.display = "none";
+
+                alert("Login inválido");
+
+            }
+
+        }, 1000);
+
+    }catch(error){
+
+        loading.style.display = "none";
+
+        console.error(error);
+
+        alert("Erro ao carregar logins.json");
+
+    }
+
 }
 
 // ENTER
-document.addEventListener("keypress", function(e){
+document.addEventListener("keydown", function(e){
 
     if(e.key === "Enter"){
         entrar();
@@ -79,16 +91,16 @@ document.addEventListener("keypress", function(e){
 // BLOQUEIOS
 document.addEventListener("contextmenu", e => e.preventDefault());
 
-document.onkeydown = function(e){
+document.addEventListener("keydown", function(e){
 
     if(
-        e.keyCode == 123 ||
-        (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
-        (e.ctrlKey && e.keyCode == 85)
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.key === "u")
     ){
-        return false;
+        e.preventDefault();
     }
 
-};
+});
 
 </script>
